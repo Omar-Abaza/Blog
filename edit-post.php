@@ -19,7 +19,7 @@ if (mysqli_num_rows($result) > 0) {
 }
 mysqli_close($conn);
 ?>
-
+      
 <div class="container-fluid pt-4">                
     <div class="row">
         <div class="col-md-6 offset-md-3">
