@@ -8,8 +8,8 @@ if (isset($_GET['id'])) {
 } else {
     header("location:index.php");
 }
-
-
+      
+ 
 $query = "select * from posts where id=$id";
 $result = mysqli_query($conn, $query);
 if (mysqli_num_rows($result) > 0) {
