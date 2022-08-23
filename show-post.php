@@ -8,7 +8,8 @@ if (isset($_GET['id'])) {
 } else {
     header("location:index.php");
 }
-$query = "select * from posts where id=$id";
+$mysql_id = base64_decode(($_GET['id']));
+$query = "select * from posts where id=$mysql_id";
 $result = mysqli_query($conn, $query);
 if (mysqli_num_rows($result) > 0) {
     $post = mysqli_fetch_assoc($result);

@@ -2,15 +2,14 @@
 <?php require('inc/navbar.php'); ?>
 <?php
 require_once 'inc/connection.php';
-
 if (isset($_GET['id'])) {
-    $id = base64_decode($_GET['id']);
+    $id = ($_GET['id']);
 } else {
     header("location:index.php");
 }
-      
- 
-$query = "select * from posts where id=$id";
+$mysql_id = base64_decode(($_GET['id']));
+
+$query = "select * from posts where id=$mysql_id";
 $result = mysqli_query($conn, $query);
 if (mysqli_num_rows($result) > 0) {
     $post = mysqli_fetch_assoc($result);
@@ -19,8 +18,8 @@ if (mysqli_num_rows($result) > 0) {
 }
 mysqli_close($conn);
 ?>
-      
-<div class="container-fluid pt-4">                
+
+<div class="container-fluid pt-4">
     <div class="row">
         <div class="col-md-6 offset-md-3">
             <div class="d-flex justify-content-between border-bottom mb-5">
@@ -31,7 +30,7 @@ mysqli_close($conn);
                     <a href="index.php" class="text-decoration-none">Back</a>
                 </div>
             </div>
-            <form method="POST" action="handle/update-post.php?id=<?= $id ;?>" enctype="multipart/form-data">
+            <form method="POST" action="handle/update-post.php?id=<?= $id ?>" enctype="multipart/form-data">
     
                 <div class="mb-3">
                     <label for="title" class="form-label">Title</label>

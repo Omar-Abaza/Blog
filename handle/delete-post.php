@@ -3,8 +3,8 @@ require_once '../inc/connection.php';
 
 if (isset($_GET['id'])) {
     $id = ($_GET['id']);
-
-    $selectQuery = "select * from posts where id=$id";
+    $mysql_id = base64_decode($_GET['id']);
+    $selectQuery = "select * from posts where id=$mysql_id";
     $result = mysqli_query($conn, $selectQuery);
 
     if (mysqli_num_rows($result) > 0) {
@@ -12,7 +12,7 @@ if (isset($_GET['id'])) {
         $image = $post['image'];
         unlink("../uploads/$image");
 
-        $query = "DELETE FROM  posts WHERE id=$id";
+        $query = "DELETE FROM  posts WHERE id=$mysql_id";
         $result = mysqli_query($conn, $query);
 
             // AutoIncrement id

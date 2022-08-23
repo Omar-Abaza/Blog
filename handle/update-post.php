@@ -2,7 +2,7 @@
 require_once '../inc/connection.php';
 if (isset($_GET['id'])) {
     $id = ($_GET['id']);
-
+    $mysql_id = base64_decode($_GET['id']);
     $title = htmlspecialchars(trim($_POST['title']));
     $body = htmlspecialchars(trim($_POST['body']));
 
@@ -24,7 +24,7 @@ if (isset($_GET['id'])) {
         $errors[] = "body must be string";
     }
 
-    $query = "SELECT * FROM `posts` WHERE id=$id";
+    $query = "SELECT * FROM `posts` WHERE id=$mysql_id";
     $result = mysqli_query($conn,$query);
     
     if(mysqli_num_rows($result)==1){
@@ -53,11 +53,11 @@ if (isset($_GET['id'])) {
     }
 
     if (empty($errors)) {
-        $selecQuery = "select * from posts where id=$id";
+        $selecQuery = "select * from posts where id=$mysql_id";
         $result = mysqli_query($conn, $selecQuery);
         if (mysqli_num_rows($result) > 0) {
             
-            $updateQuery = "update  posts set `title`='$title',`body`='$body' ,`image`='$newName' where id=$id";
+            $updateQuery = "update  posts set `title`='$title',`body`='$body' ,`image`='$newName' where id=$mysql_id";
             $result = mysqli_query($conn, $updateQuery);
             if ($result) {
     
