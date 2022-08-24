@@ -1,10 +1,16 @@
 <?php
-session_start();
 require_once '../inc/connection.php';
 if (isset($_POST['submit'])) {
 
     $title = htmlspecialchars(trim($_POST['title']));
     $body = htmlspecialchars(trim($_POST['body']));
+
+    if (isset($_SESSION['title'])) {
+    $_SESSION['title'] = $title;
+    }
+    if (isset($_SESSION['body'])) {
+    $_SESSION['body'] = $body;
+    }
 
     $errors = [];
 
@@ -47,7 +53,7 @@ if (isset($_POST['submit'])) {
     if (empty($errors)) {
         $query = "insert into posts(`title`,`body`,`image`,`user_id`) values('$title','$body','$newName',1)";
         $result = mysqli_query($conn, $query);
-
+        
         if ($result) {
 
             if ($_FILES['image']['name']) {
@@ -57,13 +63,14 @@ if (isset($_POST['submit'])) {
             header("location: ../index.php");
         } else {
             $_SESSION['errors'] = ["error while inserting"];
-            $_SESSION['title'] = $title;
-            $_SESSION['body'] = $body;
             header("location: ../create-post.php");
         }
     } else {
         $_SESSION['errors'] = $errors;
+   
         header("location: ../create-post.php");
+       
+
     }
 } else {
     header("location: ../index.php");

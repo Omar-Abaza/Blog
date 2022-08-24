@@ -57,19 +57,19 @@ require_once 'inc/header.php'; ?>
             <div class="col-md-10 offset-md-1">
                 <div class="d-flex justify-content-between border-bottom mb-5">
                     <div>
-                        <h3>All posts</h3>
+                        <h3><?= $message['All posts'] ?></h3>
                     </div>
                     <div>
-                        <a href="create-post.php" class="btn btn-sm btn-success">Add new post</a>
+                        <a href="create-post.php" class="btn btn-sm btn-success"><?= $message['Add new post'] ?></a>
                     </div>
                 </div>
                 <?php if (!empty($posts)) : ?>
                     <table class="table">
                         <thead>
                             <tr>
-                                <th scope="col">Title</th>
-                                <th scope="col">Published At</th>
-                                <th scope="col">Actions</th>
+                                <th scope="col"><?= $message['Title'] ?></th>
+                                <th scope="col"><?= $message['Published at'] ?> </th>
+                                <th scope="col"><?= $message['Actions'] ?></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -78,9 +78,9 @@ require_once 'inc/header.php'; ?>
                                     <td><?= $post['title']; ?></td>
                                     <td><?= $post['created_at']; ?></td>
                                     <td>
-                                        <a href="show-post.php?id=<?= base64_encode($post['id']); ?>" class="btn btn-sm btn-primary">Show</a>
-                                        <a href="edit-post.php?id=<?= base64_encode($post['id']); ?>" class="btn btn-sm btn-secondary">Edit</a>
-                                        <a href="handle/delete-post.php?id=<?= base64_encode($post['id']); ?>" class="btn btn-sm btn-danger" onclick="return confirm('do you really want to delete post?')">Delete</a>
+                                        <a href="show-post.php?id=<?= base64_encode($post['id']); ?>" class="btn btn-sm btn-primary"><?= $message['Show'] ?></a>
+                                        <a href="edit-post.php?id=<?= base64_encode($post['id']); ?>" class="btn btn-sm btn-secondary"><?= $message['Edit'] ?></a>
+                                        <a href="handle/delete-post.php?id=<?= base64_encode($post['id']); ?>" class="btn btn-sm btn-danger" onclick="return confirm('do you really want to delete post?')"><?= $message['Delete'] ?></a>
                                     </td>
                                 </tr>
                             <?php endforeach ?>
@@ -101,7 +101,7 @@ require_once 'inc/header.php'; ?>
                         <span aria-hidden="true">&laquo;</span>
                     </a>
                 </li>
-                <li class="page-item"><a class="page-link" href="#">page <?php echo $page ?> of <?php echo $numberOfPages ?></a></li>
+                <li class="page-item"><a class="page-link" href="#"><?= $message['page '] ?><?php echo $page ?> <?= $message['of '] ?><?php echo $numberOfPages ?></a></li>
                 <li class="page-item <?php if ($page == $numberOfPages) echo "disabled" ?>">
                     <a class="page-link" href="<?php echo $_SERVER['PHP_SELF'] . "?page=" . $page + 1 ?>" aria-label="Next">
                         <span aria-hidden="true">&raquo;</span>

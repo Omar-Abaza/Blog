@@ -1,5 +1,22 @@
+<?php 
+require_once 'connection.php';
+
+$lang = "en";
+
+if(isset($_SESSION['lang'])){
+    $lang = $_SESSION['lang'];
+}
+
+if($lang == 'ar'){
+    require_once 'message_ar.php';
+}else{
+    require_once 'message_en.php';
+}
+
+?>
+
 <!DOCTYPE html>
-<html lang="en">
+<html lang="<?= $lang; ?>" dir="<?= $message['dir']?>">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">

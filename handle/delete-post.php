@@ -1,5 +1,4 @@
 <?php
-session_start();
 require_once '../inc/connection.php';
 
 if (isset($_GET['id'])) {

@@ -28,7 +28,7 @@ mysqli_close($conn);
                     <h3><?= $post['title'] ?></h3>
                 </div>
                 <div>
-                    <a href="index.php" class="text-decoration-none">Back</a>
+                    <a href="index.php" class="text-decoration-none"><?= $message['Back'] ?></a>
                 </div>
             </div>
             <div>
