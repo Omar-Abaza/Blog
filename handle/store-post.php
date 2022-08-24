@@ -1,4 +1,5 @@
 <?php
+session_start();
 require_once '../inc/connection.php';
 if (isset($_POST['submit'])) {
 
@@ -64,7 +65,6 @@ if (isset($_POST['submit'])) {
         $_SESSION['errors'] = $errors;
         header("location: ../create-post.php");
     }
-
 } else {
     header("location: ../index.php");
 }

@@ -1,4 +1,5 @@
 <?php
+session_start();
 require_once '../inc/connection.php';
 
 if (isset($_GET['id'])) {
@@ -15,13 +16,13 @@ if (isset($_GET['id'])) {
         $query = "DELETE FROM  posts WHERE id=$mysql_id";
         $result = mysqli_query($conn, $query);
 
-            // AutoIncrement id
-            $dropId = "ALTER TABLE posts DROP id";
-            $reDropId = mysqli_query($conn, $dropId);
-            $autoIncrement = "ALTER TABLE posts AUTO_INCREMENT = 1";
-            $reAutoIncrement = mysqli_query($conn, $autoIncrement);
-            $addId = "ALTER TABLE posts ADD id int unsigned NOT null AUTO_INCREMENT PRIMARY KEY FIRST";
-            $readdId  = mysqli_query($conn, $addId);
+        // AutoIncrement id
+        $dropId = "ALTER TABLE posts DROP id";
+        $reDropId = mysqli_query($conn, $dropId);
+        $autoIncrement = "ALTER TABLE posts AUTO_INCREMENT = 1";
+        $reAutoIncrement = mysqli_query($conn, $autoIncrement);
+        $addId = "ALTER TABLE posts ADD id int unsigned NOT null AUTO_INCREMENT PRIMARY KEY FIRST";
+        $readdId  = mysqli_query($conn, $addId);
 
         if ($result) {
             $_SESSION['success'] = ["post deleted successfuly"];

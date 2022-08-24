@@ -1,5 +1,5 @@
-<?php require('inc/header.php'); ?>
-<?php require('inc/navbar.php'); ?>
+<?php require_once 'inc/header.php'; ?>
+<?php require_once 'inc/navbar.php'; ?>
 
 <div class="container-fluid pt-4">
     <div class="row">
@@ -12,6 +12,14 @@
                     <a href="index.php" class="text-decoration-none">Back</a>
                 </div>
             </div>
+            <?php
+            if (isset($_SESSION['errors'])) {
+                foreach ($_SESSION['errors'] as $error) { ?>
+                    <div class="alert alert-danger"><?= $error ?></div>
+            <?php }
+                unset($_SESSION['errors']);
+            }
+            ?>
             <form method="POST" action="handle/handle-login.php">
     
                 <div class="mb-3">
@@ -21,7 +29,7 @@
     
                 <div class="mb-3">
                     <label for="password" class="form-label">Password</label>
-                    <input type="password" class="form-control" id="password" name="password">
+                    <input type="password" class="form-control" id="password"  name="password">
                 </div>
                 
                 <button type="submit" class="btn btn-primary" name="submit">Login</button>
@@ -30,4 +38,4 @@
     </div>
 </div>
 
-<?php require('inc/footer.php'); ?>
+<?php require_once ('inc/footer.php'); ?>

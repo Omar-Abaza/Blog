@@ -6,12 +6,17 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                <?php 
+                session_start();
+                if(empty($_SESSION['user_id'])){?>
                 <li class="nav-item">
                     <a class="nav-link" href="login.php">Login</a>
                 </li>
+                <?php }else{?>
                 <li class="nav-item">
                     <a class="nav-link" href="handle/logout.php">Logout</a>
-                </li>    
+                </li>
+                <?php }?>    
             </ul>
         </div>
     </div>

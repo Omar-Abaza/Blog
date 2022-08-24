@@ -1,19 +1,14 @@
 <?php 
-    require_once '../inc/connection.php';
-
+session_start();
+require_once '../inc/connection.php';
     if(isset($_POST['submit'])){
-
+        
         $email = htmlspecialchars((trim($_POST['email'])));
         $password = htmlspecialchars((trim($_POST['password'])));
-
-        $uppercase = preg_match('@[A-Z]@', $password);
-        $lowercase = preg_match('@[a-z]@', $password);
-        $number    = preg_match('@[0-9]@', $password);
-        $specialChars = preg_match('@[^\w]@', $password);
-
+        
         $errors =[];
         //email
-        if(empty($email)){
+        if(empty($email)){ 
             $errors[]="email is required";
         }elseif(! filter_var($email,FILTER_VALIDATE_EMAIL)){
             $errors[]= "please enter validate email";
@@ -22,24 +17,41 @@
         //password
         if(empty($password)){
             $errors[]= 'password is required';
-        }elseif(strlen($password)<8 || strlen($password)>20 ){
-            $errors[]= 'password must be 8-20 characters at least';
-        }elseif(!$uppercase || !$lowercase || !$number || !$specialChars ) {
-            $errors[]= 'Password should include at least one upper case letter, one number, and one special character.';
+        }elseif(strlen($password)<6 ){
+            $errors[]= 'password must be more than 6 chars';
         }
 
         if(empty($errors)){
-            $query = "select * from users where Email='$email'";
+
+            $query = "select * from users where email = '$email'";
             $result = mysqli_query($conn,$query);
-            if(mysqli_num_rows($result)>0){
+            if(mysqli_num_rows($result) == 1){
+                
+                $user =mysqli_fetch_assoc($result);
+                $oldPassword = $user['password'];
+                $is_valid = password_verify($password,$oldPassword);
+                if($is_valid){
+                    $_SESSION['user_id'] = $user['id'];
+                    $_SESSION['success']= ["welcome back"];
+                    header("location: ../index.php");
+                    
+                }else{
+                    $_SESSION['errors'] = ["credintials not correct"];
+                    header("location: ../login.php");
+                }
 
             }else{
-                $_SESSION['errors'] = "this account not exists";
+                $_SESSION['errors'] = ["this account doesn't exist"];
+                $_SESSION['email'] = $email;
+                $_SESSION['password'] = $password;
+                header("location: ../login.php");
             }
-
+        }else{
+            $_SESSION['errors'] = $errors;
+            $_SESSION['email'] = $email;
+            $_SESSION['password'] = $password;
+            header("location: ../login.php");
         }
-
-
     }else{
         header("location: ../login.php");
     }

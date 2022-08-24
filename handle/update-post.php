@@ -1,4 +1,5 @@
 <?php
+session_start();
 require_once '../inc/connection.php';
 if (isset($_GET['id'])) {
     $id = ($_GET['id']);
@@ -25,9 +26,9 @@ if (isset($_GET['id'])) {
     }
 
     $query = "SELECT * FROM `posts` WHERE id=$mysql_id";
-    $result = mysqli_query($conn,$query);
-    
-    if(mysqli_num_rows($result)==1){
+    $result = mysqli_query($conn, $query);
+
+    if (mysqli_num_rows($result) == 1) {
         $post = mysqli_fetch_assoc($result);
     }
     $oldName = $post['image'];
@@ -56,11 +57,11 @@ if (isset($_GET['id'])) {
         $selecQuery = "select * from posts where id=$mysql_id";
         $result = mysqli_query($conn, $selecQuery);
         if (mysqli_num_rows($result) > 0) {
-            
+
             $updateQuery = "update  posts set `title`='$title',`body`='$body' ,`image`='$newName' where id=$mysql_id";
             $result = mysqli_query($conn, $updateQuery);
             if ($result) {
-    
+
                 if ($_FILES['image']['name']) {
                     move_uploaded_file($imageTmpName, "../uploads/$newName");
                     unlink("../uploads/$oldName");
@@ -71,18 +72,15 @@ if (isset($_GET['id'])) {
                 // errors
                 header("location: ../edit-post.php");
             }
-
-        }else{
-                //errors
-        }   
-
+        } else {
+            //errors
+        }
     } else {
         $_SESSION['errors'] = $errors;
         $_SESSION['title'] = $title;
         $_SESSION['body'] = $body;
         header("location: ../edit-post.php");
     }
-
 } else {
     header("location: ../index.php");
 }

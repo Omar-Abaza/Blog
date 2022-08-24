@@ -1,5 +1,6 @@
-<?php require('inc/header.php'); ?>
-<?php require('inc/navbar.php'); ?>
+<?php require_once 'inc/header.php'; ?>
+<?php require_once 'inc/navbar.php'; ?>
+<?php if(isset($_SESSION['user_id'])){ ?>
 <?php
 require_once 'inc/connection.php';
 if (isset($_GET['id'])) {
@@ -52,4 +53,9 @@ mysqli_close($conn);
     </div>
 </div>
 
-<?php require('inc/footer.php'); ?>
+<?php require_once('inc/footer.php'); ?>
+<?php 
+}else{
+    header("location: login.php");
+}
+?>
