@@ -1,4 +1,5 @@
-<?php require_once 'inc/header.php'; ?>
+<?php
+require_once 'inc/header.php'; ?>
 <?php require_once 'inc/navbar.php'; ?>
 <?php require_once 'handle/functions.php'; ?>
 
@@ -6,25 +7,25 @@
     <?php
     require_once 'inc/connection.php';
 
-    if(isset($_GET['page'])){
+    if (isset($_GET['page'])) {
         $page = $_GET['page'];
-    }else{
-        $page =1;
+    } else {
+        $page = 1;
     }
 
     $totalQuery = "select count(id) as total from posts";
-    $runQuery = mysqli_query($conn,$totalQuery);
-    if(mysqli_num_rows($runQuery)>0){
+    $runQuery = mysqli_query($conn, $totalQuery);
+    if (mysqli_num_rows($runQuery) > 0) {
         $posts = mysqli_fetch_assoc($runQuery);
         $totalcount = $posts['total'];
     }
 
     $limit = 3;
-    $offset =($page -1) * $limit;
-    $numberOfPages= ceil($totalcount/$limit);
-    
-    if(!validate($page,$numberOfPages)){
-        header("location:".$_SERVER['PHP_SELF']."?page=1");
+    $offset = ($page - 1) * $limit;
+    $numberOfPages = ceil($totalcount / $limit);
+
+    if (!validate($page, $numberOfPages)) {
+        header("location:" . $_SERVER['PHP_SELF'] . "?page=1");
     }
 
     $query = "select id, title, created_at from posts limit $limit offset $offset";
@@ -95,14 +96,14 @@
     <div class="d-flex justify-content-center">
         <nav aria-label="Page navigation example">
             <ul class="pagination">
-                <li class="page-item <?php if($page==1) echo "disabled" ?>">
-                    <a class="page-link" href="<?php echo $_SERVER['PHP_SELF']."?page=".$page-1 ?>" aria-label="Previous">
+                <li class="page-item <?php if ($page == 1) echo "disabled" ?>">
+                    <a class="page-link" href="<?php echo $_SERVER['PHP_SELF'] . "?page=" . $page - 1 ?>" aria-label="Previous">
                         <span aria-hidden="true">&laquo;</span>
                     </a>
                 </li>
-                <li class="page-item"><a class="page-link" href="#">page <?php echo $page?> of <?php echo $numberOfPages ?></a></li>
-                <li class="page-item <?php if($page==$numberOfPages) echo "disabled" ?>">
-                    <a class="page-link" href="<?php echo $_SERVER['PHP_SELF']."?page=".$page+1 ?>" aria-label="Next">
+                <li class="page-item"><a class="page-link" href="#">page <?php echo $page ?> of <?php echo $numberOfPages ?></a></li>
+                <li class="page-item <?php if ($page == $numberOfPages) echo "disabled" ?>">
+                    <a class="page-link" href="<?php echo $_SERVER['PHP_SELF'] . "?page=" . $page + 1 ?>" aria-label="Next">
                         <span aria-hidden="true">&raquo;</span>
                     </a>
                 </li>
